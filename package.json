@@ -17,13 +17,14 @@
     "backend"
   ],
   "scripts": {
-    "start:all": "npm run start:all --prefix nestjs-microservice-demo"
+    "start:microservices": "npm run start:all --prefix nestjs-microservice-demo",
+    "start:demo": "npm run start:dev --prefix NestJs-Demo"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepakabari/nestjs-lab.git"
+    "url": "git+https://github.com/Hustler-Deep/nestjs-lab.git"
   }
 }

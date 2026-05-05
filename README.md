@@ -1,43 +1,26 @@
-# 🚀 NestJS Lab: Advanced Microservices Architecture & Best Practices
+# 🚀 NestJS Lab: Advanced Architecture & Best Practices
 
 ![NestJS Lab Banner](docs/images/banner.png)
 
-[![NestJS](https://img.shields.io/badge/Framework-NestJS-red.svg?style=for-the-badge&logo=nestjs)](https://nestjs.com/)
-[![Node.js](https://img.shields.io/badge/Runtime-Node.js-green.svg?style=for-the-badge&logo=node.js)](https://nodejs.org/)
-[![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue.svg?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Microservices](https://img.shields.io/badge/Architecture-Microservices-orange.svg?style=for-the-badge)](https://microservices.io/)
+<p align="center">
+  <a href="https://nestjs.com/"><img src="https://img.shields.io/badge/Framework-NestJS-red.svg?style=for-the-badge&logo=nestjs" alt="NestJS"></a>
+  <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Runtime-Node.js-green.svg?style=for-the-badge&logo=node.js" alt="Node.js"></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/Language-TypeScript-blue.svg?style=for-the-badge&logo=typescript" alt="TypeScript"></a>
+  <a href="https://microservices.io/"><img src="https://img.shields.io/badge/Architecture-Microservices-orange.svg?style=for-the-badge" alt="Microservices"></a>
+</p>
 
-[![GitHub Stars](https://img.shields.io/github/stars/deepakabari/nestjs-lab?style=for-the-badge&logo=github&color=gold)](https://github.com/deepakabari/nestjs-lab/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/deepakabari/nestjs-lab?style=for-the-badge&logo=github&color=silver)](https://github.com/deepakabari/nestjs-lab/network/members)
-[![GitHub Issues](https://img.shields.io/github/issues/deepakabari/nestjs-lab?style=for-the-badge&logo=github&color=red)](https://github.com/deepakabari/nestjs-lab/issues)
-
+<p align="center">
+  <a href="https://github.com/Hustler-Deep/nestjs-lab/stargazers"><img src="https://img.shields.io/github/stars/Hustler-Deep/nestjs-lab?style=for-the-badge&logo=github&color=gold" alt="GitHub Stars"></a>
+  <a href="https://github.com/Hustler-Deep/nestjs-lab/network/members"><img src="https://img.shields.io/github/forks/Hustler-Deep/nestjs-lab?style=for-the-badge&logo=github&color=silver" alt="GitHub Forks"></a>
+  <a href="https://github.com/Hustler-Deep/nestjs-lab/issues"><img src="https://img.shields.io/github/issues/Hustler-Deep/nestjs-lab?style=for-the-badge&logo=github&color=red" alt="GitHub Issues"></a>
+  <a href="https://github.com/Hustler-Deep/nestjs-lab/watchers"><img src="https://img.shields.io/github/watchers/Hustler-Deep/nestjs-lab?style=for-the-badge&logo=github&color=red" alt="GitHub Watches"></a>
+  <a href="https://www.linkedin.com/in/deep-akabari" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-Deep_Akabari-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+</p>
 ## 🌟 Overview
 
-**NestJS Lab** is a high-performance, production-ready laboratory for exploring and implementing modern **microservices architecture** using **Node.js** and **NestJS**. This repository serves as a comprehensive blueprint for developers looking to build scalable, maintainable, and secure distributed systems.
+**NestJS Lab** is a high-performance, production-ready laboratory for exploring and implementing modern architectures using **Node.js** and **NestJS**. This repository serves as a comprehensive blueprint for developers looking to build scalable, maintainable, and secure systems.
 
-Whether you are a seasoned architect or a developer diving into microservices for the first time, this "Lab" provides the tools, patterns, and examples needed to master cross-service communication, centralized authentication, and modular design.
-
----
-
-## 🎯 Why NestJS Lab?
-
-In today's digital landscape, building monolithic applications often leads to bottlenecks. **NestJS Lab** solves this by demonstrating how to:
-- **Scale Independently**: Each microservice (Auth, User, Product) can be scaled based on its specific load.
-- **Maintain High Performance**: Utilizes **TCP Transporters** for lightning-fast internal communication.
-- **Ensure Robust Security**: Implements centralized **JWT Authentication** and **Role-Based Access Control (RBAC)** across the entire ecosystem.
-- **Follow Clean Code Patterns**: Uses a **Shared Library** approach to maintain consistency and reduce code duplication.
-
----
-
-## 🛠 Key Features
-
-- **🛡️ API Gateway**: A unified entry point that routes traffic and handles global transformations.
-- **🔑 Centralized Auth**: Secure authentication and authorization powered by JWT.
-- **👤 Identity Management**: Comprehensive user CRUD operations with role management.
-- **📦 Product Catalog**: Scalable product management service.
-- **📡 TCP Communication**: Optimized inter-service communication using NestJS Microservices.
-- **🏷️ Snake Case Integration**: Seamless transformation between camelCase and snake_case for standardized APIs.
-- **📝 Automated Documentation**: Fully integrated Swagger/OpenAPI for all service endpoints.
+Whether you are a seasoned architect or a developer diving into NestJS for the first time, this "Lab" provides the tools, patterns, and examples needed to master cross-service communication, centralized authentication, and modular design.
 
 ---
 
@@ -48,9 +31,21 @@ This laboratory is an ever-growing collection of NestJS implementations. Explore
 | Module | Status | Description |
 | :--- | :--- | :--- |
 | [🚀 Microservices Demo](nestjs-microservice-demo) | ✅ Ready | TCP-based microservices with API Gateway & Auth. |
+| [📦 NestJS Demo](NestJs-Demo) | ✅ Ready | Feature-rich CRUD application with TypeORM integration. |
 | **🛡️ Auth0 Integration** | 🏗️ Coming Soon | Centralized auth using Auth0 identity provider. |
 | **☁️ AWS Cognito** | 🏗️ Coming Soon | AWS Cognito integration for user pools & federation. |
-| **⚡ NestJS CRUD** | 🏗️ Coming Soon | Rapid development of CRUD APIs with TypeORM. |
+
+---
+
+## 🛠 Key Features
+
+- **🛡️ API Gateway**: A unified entry point that routes traffic and handles global transformations.
+- **🔑 Centralized Auth**: Secure authentication and authorization powered by JWT.
+- **👤 Identity Management**: Comprehensive user CRUD operations with role management.
+- **📦 Product Catalog**: Scalable product management service.
+- **📡 TCP Communication**: Optimized inter-service communication using NestJS Microservices.
+- **🏷️ Transformation Layer**: Seamless transformation between camelCase and snake_case for standardized APIs.
+- **📝 Automated Documentation**: Fully integrated Swagger/OpenAPI for all service endpoints.
 
 ---
 
@@ -59,7 +54,8 @@ This laboratory is an ever-growing collection of NestJS implementations. Explore
 ```bash
 nestjs-lab/
 ├── docs/                     # Documentation and assets
-├── nestjs-microservice-demo/ # Core microservices implementation
+├── nestjs-microservice-demo/ # Microservices Blueprint (TCP)
+├── NestJs-Demo/              # Advanced CRUD & TypeORM Lab
 ├── nestjs-auth0/             # (Future) Auth0 Lab
 ├── nestjs-cognito/           # (Future) Cognito Lab
 └── README.md                 # Lab Entry Point
@@ -73,17 +69,14 @@ To get the lab up and running on your local machine, follow these steps:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/deepakabari/nestjs-lab.git
+   git clone https://github.com/Hustler-Deep/nestjs-lab.git
    cd nestjs-lab
    ```
 
-2. **Explore the Demo**:
-   Navigate to the core project and follow the detailed [installation guide](nestjs-microservice-demo/README.md).
-   ```bash
-   cd nestjs-microservice-demo
-   npm install
-   npm run start:all
-   ```
+2. **Explore the Modules**:
+   Navigate to a specific lab and follow its local installation guide.
+   - For Microservices: `cd nestjs-microservice-demo`
+   - For CRUD Demo: `cd NestJs-Demo`
 
 ---
 
@@ -96,6 +89,11 @@ Contributions are what make the open-source community such an amazing place to l
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
+
+## 📫 Stay in touch
+
+- **GitHub:** [@Hustler-Deep](https://github.com/Hustler-Deep)
+- **LinkedIn:** [Deep Akabari](https://www.linkedin.com/in/deep-akabari)
 
 ---
 

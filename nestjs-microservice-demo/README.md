@@ -1,5 +1,10 @@
 # NestJS Microservices (TCP)
 
+<p align="center">
+  <a href="https://github.com/Hustler-Deep" target="_blank"><img src="https://img.shields.io/badge/GitHub-Hustler--Deep-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub" /></a>
+  <a href="https://www.linkedin.com/in/deep-akabari" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-Deep_Akabari-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+</p>
+
 A documentation for a **NestJS microservices architecture** using the **TCP transporter**. 
 The project contains the following services:
 
@@ -179,3 +184,14 @@ Each microservice should create a TCP listener using the NestJS `MicroserviceOpt
 4. Gateway returns HTTP 200 with token to client.
 
 ---
+
+## 📫 Stay in touch
+
+- **GitHub:** [@Hustler-Deep](https://github.com/Hustler-Deep)
+- **LinkedIn:** [Deep Akabari](https://www.linkedin.com/in/deep-akabari)
+
+---
+
+## 📜 License
+
+Distributed under the MIT License. See `LICENSE` for more information.

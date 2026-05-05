@@ -12,7 +12,7 @@ const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: false,
   entities: [Product],
-  migrations: ['dist/database/migrations/**/*{.ts,.js}'],
+  migrations: [__dirname + '/../database/migrations/**/*{.ts,.js}'],
   migrationsRun: false,
   logging: true,
 });

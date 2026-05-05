@@ -35,7 +35,7 @@ export class ResponseInterceptor<T>
           originalData !== null &&
           'data' in originalData
         ) {
-          const typed = originalData as { message?: Messages; data: T };
+          const typed = originalData;
           message = typed.message ?? messages.SUCCESS;
           data = typed.data;
         } else if (
@@ -44,7 +44,7 @@ export class ResponseInterceptor<T>
           'message' in originalData &&
           Object.keys(originalData).length === 1
         ) {
-          const typed = originalData as { message?: Messages };
+          const typed = originalData;
           message = typed.message ?? messages.SUCCESS;
           data = undefined;
         } else {

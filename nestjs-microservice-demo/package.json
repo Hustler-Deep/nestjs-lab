@@ -10,10 +10,21 @@
     "start:product": "cd product-service && npm run start:dev",
     "start:all": "concurrently -n gateway,auth,user,product -c green,blue,yellow,magenta \"npm run start:gateway\" \"npm run start:auth\" \"npm run start:user\" \"npm run start:product\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": [
+    "nestjs",
+    "microservices",
+    "typescript",
+    "tcp-transporter",
+    "api-gateway",
+    "node-js",
+    "distributed-systems",
+    "backend-development",
+    "jwt-auth",
+    "rbac"
+  ],
+  "author": "Deepak Abari",
+  "license": "MIT",
+  "description": "A comprehensive NestJS microservices laboratory demonstrating TCP communication, API Gateway, JWT authentication, and clean architecture.",
   "devDependencies": {
     "concurrently": "^9.2.0"
   }

@@ -1,0 +1,29 @@
+{
+  "name": "nestjs-lab",
+  "version": "1.0.0",
+  "description": "An advanced NestJS microservices laboratory for scalable distributed systems.",
+  "private": true,
+  "author": "Deep Akabari",
+  "license": "MIT",
+  "keywords": [
+    "nestjs",
+    "microservices",
+    "typescript",
+    "tcp-transporter",
+    "api-gateway",
+    "node-js",
+    "distributed-systems",
+    "clean-architecture",
+    "backend"
+  ],
+  "scripts": {
+    "start:all": "npm run start:all --prefix nestjs-microservice-demo"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deepakabari/nestjs-lab.git"
+  }
+}

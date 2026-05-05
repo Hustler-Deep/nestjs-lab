@@ -2,9 +2,13 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { CreateUserDto, messages, UpdateUserDto } from '@nestjs/shared-lib';
+import {
+  CreateUserDto,
+  isDatabaseError,
+  messages,
+  UpdateUserDto,
+} from '@nestjs/shared-lib';
 import { RpcException } from '@nestjs/microservices';
-import { isDatabaseError } from './utils/common.util';
 
 @Injectable()
 export class UserService {
@@ -59,8 +63,23 @@ export class UserService {
     };
   }
 
+  /**
+   * Public lookup — password is excluded by default (select: false on entity).
+   */
   async findByEmail(email: string) {
     return await this.usersRepository.findOneBy({ email });
+  }
+
+  /**
+   * Internal lookup — includes the password hash.
+   * Used exclusively by auth-service for credential validation.
+   */
+  async findByEmailWithPassword(email: string) {
+    return await this.usersRepository
+      .createQueryBuilder('user')
+      .addSelect('user.password')
+      .where('user.email = :email', { email })
+      .getOne();
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
@@ -81,6 +100,7 @@ export class UserService {
         data: savedUser,
       };
     } catch (error: unknown) {
+      if (error instanceof RpcException) throw error;
       if (isDatabaseError(error) && error.code === 'ER_DUP_ENTRY') {
         // Duplicate email error from MySQL
         throw new RpcException({
@@ -97,7 +117,7 @@ export class UserService {
   }
 
   async remove(id: number) {
-    const result = await this.usersRepository.delete(id);
+    const result = await this.usersRepository.softDelete(id);
     if (result.affected === 0) {
       throw new RpcException({
         statusCode: HttpStatus.NOT_FOUND,

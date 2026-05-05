@@ -1,24 +1,44 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { LoginDto, messages, RegisterDto } from '@nestjs/shared-lib';
+import {
+  LoginDto,
+  messages,
+  MessagePatterns,
+  RegisterDto,
+  ServiceTokens,
+} from '@nestjs/shared-lib';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
+
+/** Shape of user data returned by user-service over TCP */
+interface UserPayload {
+  id: number;
+  email: string;
+  password: string;
+  name: string;
+  role: string;
+}
 
 @Injectable()
 export class AuthService {
   constructor(
-    @Inject('USER_SERVICE')
+    @Inject(ServiceTokens.USER_SERVICE)
     private readonly userClient: ClientProxy,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<User | null> {
+  async validateUser(
+    email: string,
+    password: string,
+  ): Promise<UserPayload | null> {
     const user = await lastValueFrom(
-      this.userClient.send<User>({ cmd: 'get_user_by_email' }, email),
+      this.userClient.send<UserPayload>(
+        MessagePatterns.USER_VALIDATE_CREDENTIALS,
+        email,
+      ),
     );
     if (!user) return null;
 
@@ -29,7 +49,10 @@ export class AuthService {
   async register(registerDto: RegisterDto) {
     try {
       const user = await lastValueFrom(
-        this.userClient.send<User>({ cmd: 'create_user' }, registerDto),
+        this.userClient.send<UserPayload>(
+          MessagePatterns.USER_CREATE,
+          registerDto,
+        ),
       );
 
       return user;

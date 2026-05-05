@@ -17,31 +17,40 @@ import {
   CreateUserDto,
   CustomRequest,
   LoginDto,
+  MessagePatterns,
   RegisterDto,
+  Roles,
+  ServiceTokens,
   UpdateProductDto,
   UpdateUserDto,
 } from '@nestjs/shared-lib';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { RolesGuard } from './common/guards/roles.guard';
-import { Roles } from './common/decoraters/roles.decorator';
 
 @Controller()
 export class AppController {
   constructor(
-    @Inject('AUTH_SERVICE') private readonly authService: ClientProxy,
-    @Inject('USER_SERVICE') private readonly userService: ClientProxy,
-    @Inject('PRODUCT_SERVICE') private readonly productService: ClientProxy,
+    @Inject(ServiceTokens.AUTH_SERVICE)
+    private readonly authService: ClientProxy,
+    @Inject(ServiceTokens.USER_SERVICE)
+    private readonly userService: ClientProxy,
+    @Inject(ServiceTokens.PRODUCT_SERVICE)
+    private readonly productService: ClientProxy,
   ) {}
 
   // ---------------- AUTH ----------------
   @Post('auth/register')
   register(@Body() body: RegisterDto) {
-    return firstValueFrom(this.authService.send({ cmd: 'register' }, body));
+    return firstValueFrom(
+      this.authService.send(MessagePatterns.AUTH_REGISTER, body),
+    );
   }
 
   @Post('auth/login')
   login(@Body() body: LoginDto) {
-    return firstValueFrom(this.authService.send({ cmd: 'login' }, body));
+    return firstValueFrom(
+      this.authService.send(MessagePatterns.AUTH_LOGIN, body),
+    );
   }
 
   // ---------------- USER ----------------
@@ -52,27 +61,29 @@ export class AppController {
     @Body()
     createUserDto: CreateUserDto,
   ): Promise<Record<string, unknown>> {
-    const result = firstValueFrom(
+    return firstValueFrom(
       this.userService.send<Record<string, unknown>, CreateUserDto>(
-        { cmd: 'create_user' },
+        MessagePatterns.USER_CREATE,
         createUserDto,
       ),
     );
-
-    return result;
   }
 
   @Get('users')
   @UseGuards(JwtAuthGuard, RolesGuard)
   getUsers() {
-    return firstValueFrom(this.userService.send({ cmd: 'get_users' }, {}));
+    return firstValueFrom(
+      this.userService.send(MessagePatterns.USER_GET_ALL, {}),
+    );
   }
 
   @Get('users/:id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
   getUser(@Param('id') id: string) {
-    return firstValueFrom(this.userService.send({ cmd: 'get_user' }, id));
+    return firstValueFrom(
+      this.userService.send(MessagePatterns.USER_GET_ONE, id),
+    );
   }
 
   @Patch('users/:id')
@@ -84,7 +95,10 @@ export class AppController {
     updateUserDto: UpdateUserDto,
   ) {
     return firstValueFrom(
-      this.userService.send({ cmd: 'update_user' }, { id, updateUserDto }),
+      this.userService.send(MessagePatterns.USER_UPDATE, {
+        id,
+        updateUserDto,
+      }),
     );
   }
 
@@ -92,7 +106,9 @@ export class AppController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
   deleteUser(@Param('id') id: string) {
-    return firstValueFrom(this.userService.send({ cmd: 'delete_user' }, id));
+    return firstValueFrom(
+      this.userService.send(MessagePatterns.USER_DELETE, id),
+    );
   }
 
   // ---------------- PRODUCTS ----------------
@@ -101,10 +117,10 @@ export class AppController {
   createProduct(@Body() dto: CreateProductDto, @Req() req: CustomRequest) {
     const user = req.user;
     return firstValueFrom(
-      this.productService.send(
-        { cmd: 'create_product' },
-        { dto, userId: user.id },
-      ),
+      this.productService.send(MessagePatterns.PRODUCT_CREATE, {
+        dto,
+        userId: user.id,
+      }),
     );
   }
 
@@ -113,10 +129,10 @@ export class AppController {
   getProducts(@Req() req: CustomRequest) {
     const user = req.user;
     return firstValueFrom(
-      this.productService.send(
-        { cmd: 'get_products' },
-        { id: user.id, role: user.role },
-      ),
+      this.productService.send(MessagePatterns.PRODUCT_GET_ALL, {
+        id: user.id,
+        role: user.role,
+      }),
     );
   }
 
@@ -124,7 +140,7 @@ export class AppController {
   @UseGuards(JwtAuthGuard)
   getProduct(@Param('id') id: string) {
     return firstValueFrom(
-      this.productService.send({ cmd: 'get_product' }, Number(id)),
+      this.productService.send(MessagePatterns.PRODUCT_GET_ONE, Number(id)),
     );
   }
 
@@ -132,10 +148,10 @@ export class AppController {
   @UseGuards(JwtAuthGuard)
   updateProduct(@Param('id') id: string, @Body() dto: UpdateProductDto) {
     return firstValueFrom(
-      this.productService.send(
-        { cmd: 'update_product' },
-        { id: Number(id), dto },
-      ),
+      this.productService.send(MessagePatterns.PRODUCT_UPDATE, {
+        id: Number(id),
+        dto,
+      }),
     );
   }
 
@@ -144,7 +160,7 @@ export class AppController {
   @Roles('admin')
   deleteProduct(@Param('id') id: string) {
     return firstValueFrom(
-      this.productService.send({ cmd: 'delete_product' }, Number(id)),
+      this.productService.send(MessagePatterns.PRODUCT_DELETE, Number(id)),
     );
   }
 }

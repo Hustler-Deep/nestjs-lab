@@ -2,25 +2,27 @@ import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import AppDataSource from './config/typeorm.config';
 import { JwtModule } from '@nestjs/jwt';
-import { User } from './entities/user.entity';
 import { SharedLibModule } from '@nestjs/shared-lib';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ServiceTokens } from '@nestjs/shared-lib';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     SharedLibModule,
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
-        name: 'USER_SERVICE',
-        transport: Transport.TCP,
-        options: {
-          host: '127.0.0.1',
-          port: 4002,
-        },
+        name: ServiceTokens.USER_SERVICE,
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.TCP,
+          options: {
+            host: configService.get<string>('USER_SERVICE_HOST', '127.0.0.1'),
+            port: configService.get<number>('USER_SERVICE_PORT', 4002),
+          },
+        }),
       },
     ]),
     JwtModule.registerAsync({
@@ -31,8 +33,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         signOptions: { expiresIn: '1h' },
       }),
     }),
-    TypeOrmModule.forRoot(AppDataSource.options),
-    TypeOrmModule.forFeature([User]),
   ],
   controllers: [AuthController],
   providers: [AuthService],

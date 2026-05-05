@@ -9,10 +9,10 @@ A documentation for a **NestJS microservices architecture** using the **TCP tran
 The project contains the following services:
 
 - **🛡️ api-gateway** — API gateway (HTTP) that routes requests to microservices
-- **🔑 auth-service** — Registration and Login
-- **👤 user-service** — User management (CRUD)
+- **🔑 auth-service** — Registration and Login (stateless — delegates user data to user-service via TCP)
+- **👤 user-service** — User management (CRUD) — **single owner of User data**
 - **📦 product-service** — Product management (CRUD)
-- **📚 shared-lib** — Common implementation
+- **📚 shared-lib** — Common DTOs, interfaces, constants, decorators, and utilities
 
 **Common features implemented across services:**
 - 🔐 JWT-based authentication  
@@ -27,6 +27,7 @@ The project contains the following services:
 ## 📑 Table of Contents
 - [📌 Overview](#-overview)
 - [📂 Repo Structure](#-repo-structure)
+- [🏗️ Architecture Principles](#️-architecture-principles)
 - [🛠 Prerequisites](#-prerequisites)
 - [📥 Installation](#-installation)
 - [⚙️ Environment Variables](#️-environment-variables)
@@ -48,24 +49,57 @@ This template demonstrates a simple microservice setup using NestJS with TCP tra
 repo-root/
 ├─ api-gateway/
 │  ├─ src/
+│  │  ├─ auth/              # JWT/Passport module
+│  │  ├─ common/            # Guards, filters, interceptors, pipes, strategies
+│  │  ├─ app.controller.ts  # Routes → microservice calls
+│  │  ├─ app.module.ts
+│  │  └─ main.ts
 │  └─ package.json
 ├─ auth-service/
 │  ├─ src/
+│  │  ├─ auth.controller.ts # TCP message handlers
+│  │  ├─ auth.service.ts    # Delegates to user-service via TCP
+│  │  ├─ auth.module.ts
+│  │  └─ main.ts
 │  └─ package.json
 ├─ user-service/
 │  ├─ src/
+│  │  ├─ entities/          # User entity (single source of truth)
+│  │  ├─ config/            # TypeORM config
+│  │  ├─ user.controller.ts
+│  │  ├─ user.service.ts
+│  │  ├─ user.module.ts
+│  │  └─ main.ts
 │  └─ package.json
 ├─ product-service/
 │  ├─ src/
+│  │  ├─ entities/          # Product entity
+│  │  ├─ config/            # TypeORM config
+│  │  ├─ database/          # Migrations
+│  │  ├─ product.controller.ts
+│  │  ├─ product.service.ts
+│  │  ├─ product.module.ts
+│  │  └─ main.ts
 │  └─ package.json
 ├─ shared-lib/
 │  ├─ src/
+│  │  ├─ common/            # Shared decorators (Match, Roles)
+│  │  ├─ constants/         # Messages, validation, enums, message patterns, service tokens
+│  │  ├─ dtos/              # All DTOs (auth, user, product)
+│  │  ├─ interfaces/        # Shared interfaces
+│  │  ├─ utils/             # Shared utilities (isDatabaseError)
+│  │  └─ index.ts           # Barrel exports
 │  └─ package.json
 │  README.md
 └─ package.json
 ```
 
-Each service is a standalone NestJS app. Shared DTOs, interfaces, and constants can be placed in a `@nestjs/shared-lib` package.
+## 🏗️ Architecture Principles
+
+1. **Single Data Ownership** — Each entity (User, Product) is owned by exactly one microservice. Only that service has direct database access to its table.
+2. **Auth-service is stateless** — It does not have its own database connection. It communicates with `user-service` via TCP to fetch/create users.
+3. **Shared Contracts** — All DTOs, message patterns, service tokens, and constants live in `shared-lib` to prevent mismatches.
+4. **Environment-driven Config** — TCP ports and DB connections are configured via environment variables, not hardcoded values.
 
 ## 🛠 Prerequisites
 
@@ -95,45 +129,52 @@ npm install
 
 ## ⚙️ Environment Variables
 
-Create a `.env` in each service with service-specific settings.
+Create a `.env` in each service with service-specific settings. See `.env.example` in each service.
 
 **api-gateway/.env**
 
 ```
 JWT_SECRET=your_jwt_secret_here
+AUTH_SERVICE_HOST=127.0.0.1
+AUTH_SERVICE_PORT=4001
+USER_SERVICE_HOST=127.0.0.1
+USER_SERVICE_PORT=4002
+PRODUCT_SERVICE_HOST=127.0.0.1
+PRODUCT_SERVICE_PORT=4003
 ```
 
 **auth-service/.env**
 
 ```
 JWT_SECRET=your_jwt_secret_here
-DB_HOST=
-DB_PORT=
-DB_USERNAME=
-DB_PASSWORD=
-DB_NAME=
+TCP_HOST=127.0.0.1
+TCP_PORT=4001
+USER_SERVICE_HOST=127.0.0.1
+USER_SERVICE_PORT=4002
 ```
 
 **user-service/.env**
 
 ```
-JWT_SECRET=your_jwt_secret_here
-DB_HOST=
-DB_PORT=
-DB_USERNAME=
+TCP_HOST=127.0.0.1
+TCP_PORT=4002
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=root
 DB_PASSWORD=
-DB_NAME=
+DB_NAME=user_service_db
 ```
 
 **product-service/.env**
 
 ```
-JWT_SECRET=your_jwt_secret_here
-DB_HOST=
-DB_PORT=
-DB_USERNAME=
+TCP_HOST=127.0.0.1
+TCP_PORT=4003
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=root
 DB_PASSWORD=
-DB_NAME=
+DB_NAME=product_service_db
 ```
 
 > Use strong secrets in production and store them in a secrets manager.
@@ -169,6 +210,7 @@ Each microservice should create a TCP listener using the NestJS `MicroserviceOpt
 ## 💡 Notes & Best Practices
 
 - **Shared contracts:** Keep DTOs and message patterns in a shared library to avoid mismatch across services.
+- **Data ownership:** Never let two services directly access the same database table. Use inter-service TCP calls instead.
 - **Timeouts & retries:** Use timeouts for client calls and handle retries/backoff when appropriate.
 - **Logging & tracing:** Implement structured logging and distributed tracing for observability.
 - **Security:** Keep JWT secrets and other sensitive data in environment variables / secret managers. Use HTTPS for gateway in production.
@@ -179,9 +221,10 @@ Each microservice should create a TCP listener using the NestJS `MicroserviceOpt
 
 
 1. Client POST `/auth/login` to gateway with `{ email, password }`.
-2. Gateway forwards to `authClient.send({ cmd: 'login' }, { email, password })`.
-3. Auth service validates credentials and returns `{ accessToken }`.
-4. Gateway returns HTTP 200 with token to client.
+2. Gateway forwards to `authClient.send(MessagePatterns.AUTH_LOGIN, { email, password })`.
+3. Auth service calls `userClient.send(MessagePatterns.USER_GET_BY_EMAIL, email)` to get user from user-service.
+4. Auth service validates credentials and returns `{ accessToken }`.
+5. Gateway returns HTTP 200 with token to client.
 
 ---
 

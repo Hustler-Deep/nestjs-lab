@@ -82,14 +82,13 @@ export class ProductService {
   }
 
   async remove(id: number) {
-    const product = await this.productRepo.findOneBy({ id });
-    if (!product) {
+    const result = await this.productRepo.softDelete(id);
+    if (result.affected === 0) {
       throw new RpcException({
         statusCode: HttpStatus.NOT_FOUND,
         message: messages.PRODUCT_NOT_FOUND,
       });
     }
-    await this.productRepo.delete(id);
 
     return {
       message: messages.PRODUCT_DELETED,

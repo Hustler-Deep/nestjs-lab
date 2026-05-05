@@ -6,7 +6,7 @@ import {
   IsString,
   Matches,
 } from 'class-validator';
-import { Match } from '../../common/decoraters/match.decorator';
+import { Match } from '../../common/decorators/match.decorator';
 import { messages } from '../../constants/messages.constants';
 import { UserRole } from '../../constants/user-roles.enum';
 import { ValidationMessages } from '../../constants/validation.constants';

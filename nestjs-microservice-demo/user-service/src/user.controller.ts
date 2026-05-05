@@ -1,41 +1,49 @@
 import { Controller } from '@nestjs/common';
 import { UserService } from './user.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { CreateUserDto, UpdateUserDto } from '@nestjs/shared-lib';
+import {
+  CreateUserDto,
+  MessagePatterns,
+  UpdateUserDto,
+} from '@nestjs/shared-lib';
 
 @Controller()
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @MessagePattern({ cmd: 'create_user' })
+  @MessagePattern(MessagePatterns.USER_CREATE)
   create(@Payload() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
 
-  @MessagePattern({ cmd: 'get_user' })
+  @MessagePattern(MessagePatterns.USER_GET_ONE)
   findOne(@Payload() id: number) {
     return this.userService.findOne(id);
   }
 
-  @MessagePattern({ cmd: 'get_users' })
+  @MessagePattern(MessagePatterns.USER_GET_ALL)
   findAll() {
     return this.userService.findAll();
   }
 
-  @MessagePattern({ cmd: 'get_user_by_email' })
+  @MessagePattern(MessagePatterns.USER_GET_BY_EMAIL)
   findByEmail(email: string) {
     return this.userService.findByEmail(email);
   }
 
-  @MessagePattern({ cmd: 'update_user' })
+  /** Internal: returns user WITH password hash for auth-service credential validation */
+  @MessagePattern(MessagePatterns.USER_VALIDATE_CREDENTIALS)
+  findByEmailWithPassword(@Payload() email: string) {
+    return this.userService.findByEmailWithPassword(email);
+  }
+
+  @MessagePattern(MessagePatterns.USER_UPDATE)
   update(@Payload() payload: { id: number; updateUserDto: UpdateUserDto }) {
     return this.userService.update(payload.id, payload.updateUserDto);
   }
 
-  @MessagePattern({ cmd: 'delete_user' })
+  @MessagePattern(MessagePatterns.USER_DELETE)
   remove(@Payload() id: number) {
-    const temp = this.userService.remove(id);
-    console.log('temp', temp);
-    return temp;
+    return this.userService.remove(id);
   }
 }

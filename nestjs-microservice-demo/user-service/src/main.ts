@@ -7,13 +7,16 @@ async function bootstrap() {
     UserModule,
     {
       transport: Transport.TCP,
-      options: { host: '127.0.0.1', port: 4002 },
+      options: {
+        host: process.env.TCP_HOST ?? '127.0.0.1',
+        port: parseInt(process.env.TCP_PORT ?? '4002', 10),
+      },
     },
   );
   await app.listen();
 }
 
 bootstrap().catch((err) => {
-  console.error('Microservice failed to start:', err);
+  console.error('User microservice failed to start:', err);
   process.exit(1);
 });

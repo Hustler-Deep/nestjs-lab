@@ -3,7 +3,8 @@ import { AppController } from './app.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RolesGuard } from './common/guards/roles.guard';
 import { AuthModule } from './auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ServiceTokens } from '@nestjs/shared-lib';
 
 @Module({
   imports: [
@@ -11,30 +12,45 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
     }),
     AuthModule,
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
-        name: 'AUTH_SERVICE',
-        transport: Transport.TCP,
-        options: {
-          host: '127.0.0.1',
-          port: 4001,
-        },
+        name: ServiceTokens.AUTH_SERVICE,
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.TCP,
+          options: {
+            host: configService.get<string>('AUTH_SERVICE_HOST', '127.0.0.1'),
+            port: configService.get<number>('AUTH_SERVICE_PORT', 4001),
+          },
+        }),
       },
       {
-        name: 'USER_SERVICE',
-        transport: Transport.TCP,
-        options: {
-          host: '127.0.0.1',
-          port: 4002,
-        },
+        name: ServiceTokens.USER_SERVICE,
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.TCP,
+          options: {
+            host: configService.get<string>('USER_SERVICE_HOST', '127.0.0.1'),
+            port: configService.get<number>('USER_SERVICE_PORT', 4002),
+          },
+        }),
       },
       {
-        name: 'PRODUCT_SERVICE',
-        transport: Transport.TCP,
-        options: {
-          host: '127.0.0.1',
-          port: 4003,
-        },
+        name: ServiceTokens.PRODUCT_SERVICE,
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.TCP,
+          options: {
+            host: configService.get<string>(
+              'PRODUCT_SERVICE_HOST',
+              '127.0.0.1',
+            ),
+            port: configService.get<number>('PRODUCT_SERVICE_PORT', 4003),
+          },
+        }),
       },
     ]),
   ],

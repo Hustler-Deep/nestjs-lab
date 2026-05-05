@@ -2,7 +2,7 @@ import { IsEmail, IsIn, IsNotEmpty, IsString, Matches } from 'class-validator';
 import { ValidationMessages } from '../../constants/validation.constants';
 import { messages } from '../../constants/messages.constants';
 import { UserRole } from '../../constants/user-roles.enum';
-import { Match } from '../../common/decoraters/match.decorator';
+import { Match } from '../../common/decorators/match.decorator';
 
 export class RegisterDto {
   @IsNotEmpty({ message: ValidationMessages.email.required })

@@ -14,7 +14,7 @@ import { ValidationMessages } from '../../constants/validation.constants';
 export class CreateUserDto {
   @IsNotEmpty({ message: ValidationMessages.email.required })
   @IsEmail()
-  email: string;
+  declare email: string;
 
   @IsNotEmpty({ message: ValidationMessages.password.required })
   @IsString()
@@ -24,18 +24,19 @@ export class CreateUserDto {
       message: ValidationMessages.password.complexity,
     },
   )
-  password: string;
+  declare password: string;
 
   @IsNotEmpty()
   @IsString()
   @Match('password', { message: messages.PASSWORD_DOES_NOT_MATCH })
-  confirmPassword: string;
+  declare confirmPassword: string;
 
   @IsOptional()
   @IsIn([UserRole.USER, UserRole.ADMIN])
   @IsString()
-  role?: UserRole;
+  declare role: UserRole;
 
   @IsString()
-  name: string;
+  @IsNotEmpty({ message: ValidationMessages.name.required })
+  declare name: string;
 }

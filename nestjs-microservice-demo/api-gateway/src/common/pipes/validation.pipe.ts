@@ -1,18 +1,10 @@
-import {
-  ArgumentMetadata,
-  BadRequestException,
-  Injectable,
-  PipeTransform,
-} from '@nestjs/common';
+import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<unknown> {
-  async transform(
-    value: unknown,
-    { metatype }: ArgumentMetadata,
-  ): Promise<unknown> {
+  async transform(value: unknown, { metatype }: ArgumentMetadata): Promise<unknown> {
     if (!metatype || !this.toValidate(metatype)) {
       return value;
     }
@@ -29,9 +21,7 @@ export class ValidationPipe implements PipeTransform<unknown> {
     return value;
   }
 
-  private toValidate(
-    metatype: unknown,
-  ): metatype is new (...args: unknown[]) => object {
+  private toValidate(metatype: unknown): metatype is new (...args: unknown[]) => object {
     const types: unknown[] = [String, Boolean, Number, Array, Object];
     return typeof metatype === 'function' && !types.includes(metatype);
   }
@@ -40,27 +30,17 @@ export class ValidationPipe implements PipeTransform<unknown> {
     property: string;
     message: string;
   } {
-    const PRIORITY = [
-      'isDefined',
-      'isNotEmpty',
-      'isString',
-      'isEmail',
-      'minLength',
-      'maxLength',
-    ];
+    const PRIORITY = ['isDefined', 'isNotEmpty', 'isString', 'isEmail', 'minLength', 'maxLength'];
 
     for (const error of errors) {
       if (error.constraints) {
-        const sortedMessages = Object.entries(error.constraints).sort(
-          ([a], [b]) => {
-            const aIndex = PRIORITY.indexOf(a);
-            const bIndex = PRIORITY.indexOf(b);
-            return (
-              (aIndex === -1 ? PRIORITY.length : aIndex) -
-              (bIndex === -1 ? PRIORITY.length : bIndex)
-            );
-          },
-        );
+        const sortedMessages = Object.entries(error.constraints).sort(([a], [b]) => {
+          const aIndex = PRIORITY.indexOf(a);
+          const bIndex = PRIORITY.indexOf(b);
+          return (
+            (aIndex === -1 ? PRIORITY.length : aIndex) - (bIndex === -1 ? PRIORITY.length : bIndex)
+          );
+        });
 
         const [, message] = sortedMessages[0];
 

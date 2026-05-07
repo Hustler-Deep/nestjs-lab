@@ -11,10 +11,7 @@ async function bootstrap() {
   app.enableCors();
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalInterceptors(
-    new RpcExceptionInterceptor(),
-    new ResponseInterceptor(),
-  );
+  app.useGlobalInterceptors(new RpcExceptionInterceptor(), new ResponseInterceptor());
   app.useGlobalFilters(new AllExceptionsFilter());
   await app.listen(process.env.PORT ?? 3000);
 }

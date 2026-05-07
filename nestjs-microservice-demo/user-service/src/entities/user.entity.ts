@@ -14,29 +14,29 @@ import { UserRole } from '@nestjs/shared-lib';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  declare id: number;
 
   @Column({ unique: true })
-  email: string;
+  declare email: string;
 
   @Exclude()
   @Column({ select: false })
-  password: string;
+  declare password: string;
 
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
-  role: UserRole;
+  declare role: UserRole;
 
   @Column()
-  name: string;
+  declare name: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  declare createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  declare updatedAt: Date;
 
   @DeleteDateColumn({ nullable: true })
-  deletedAt: Date | null;
+  declare deletedAt: Date | null;
 
   @BeforeInsert()
   hashPassword() {

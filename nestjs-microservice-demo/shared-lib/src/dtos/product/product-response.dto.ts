@@ -1,6 +1,6 @@
 export class ProductResponseDto {
-  id: number;
-  name: string;
-  price: number;
-  userId: number;
+  declare id: number;
+  declare name: string;
+  declare price: number;
+  declare userId: number;
 }

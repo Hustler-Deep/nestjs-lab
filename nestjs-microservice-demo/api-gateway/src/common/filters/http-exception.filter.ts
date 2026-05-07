@@ -1,10 +1,4 @@
-import {
-  ArgumentsHost,
-  Catch,
-  ExceptionFilter,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
 import { CustomExceptionResponse, messages } from '@nestjs/shared-lib';
 import { Response } from 'express';
 

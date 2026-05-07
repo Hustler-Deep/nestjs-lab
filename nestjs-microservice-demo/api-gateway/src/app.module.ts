@@ -44,10 +44,7 @@ import { ServiceTokens } from '@nestjs/shared-lib';
         useFactory: (configService: ConfigService) => ({
           transport: Transport.TCP,
           options: {
-            host: configService.get<string>(
-              'PRODUCT_SERVICE_HOST',
-              '127.0.0.1',
-            ),
+            host: configService.get<string>('PRODUCT_SERVICE_HOST', '127.0.0.1'),
             port: configService.get<number>('PRODUCT_SERVICE_PORT', 4003),
           },
         }),

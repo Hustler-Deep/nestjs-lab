@@ -4,14 +4,14 @@ import { ValidationMessages } from "../../constants/validation.constants";
 export class CreateProductDto {
   @IsNotEmpty({ message: ValidationMessages.name.required })
   @IsString()
-  name: string;
+  declare name: string;
 
   @IsNotEmpty({ message: ValidationMessages.description.required })
   @IsString()
-  description: string;
+  declare description: string;
 
   @IsNotEmpty({ message: ValidationMessages.price.required })
   @IsNumber()
   @Min(0)
-  price: number;
+  declare price: number;
 }

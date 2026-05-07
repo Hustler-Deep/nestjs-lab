@@ -4,6 +4,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
+    "install:all": "cd api-gateway && npm install && cd ../auth-service && npm install && cd ../user-service && npm install && cd ../product-service && npm install && cd ../shared-lib && npm install",
     "start:gateway": "cd api-gateway && npm run start:dev",
     "start:auth": "cd auth-service && npm run start:dev",
     "start:user": "cd user-service && npm run start:dev",

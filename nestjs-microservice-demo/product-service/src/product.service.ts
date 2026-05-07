@@ -2,12 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
-import {
-  CreateProductDto,
-  messages,
-  UpdateProductDto,
-  UserRole,
-} from '@nestjs/shared-lib';
+import { CreateProductDto, messages, UpdateProductDto, UserRole } from '@nestjs/shared-lib';
 import { RpcException } from '@nestjs/microservices';
 
 @Injectable()

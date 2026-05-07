@@ -2,19 +2,12 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import {
-  CreateUserDto,
-  isDatabaseError,
-  messages,
-  UpdateUserDto,
-} from '@nestjs/shared-lib';
+import { CreateUserDto, isDatabaseError, messages, UpdateUserDto } from '@nestjs/shared-lib';
 import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectRepository(User) private usersRepository: Repository<User>,
-  ) {}
+  constructor(@InjectRepository(User) private usersRepository: Repository<User>) {}
 
   async create(createUserDto: CreateUserDto) {
     try {

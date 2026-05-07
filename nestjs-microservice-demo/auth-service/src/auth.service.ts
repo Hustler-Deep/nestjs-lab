@@ -11,15 +11,8 @@ import {
 } from '@nestjs/shared-lib';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
-
-/** Shape of user data returned by user-service over TCP */
-interface UserPayload {
-  id: number;
-  email: string;
-  password: string;
-  name: string;
-  role: string;
-}
+import { UserPayload } from './interfaces/user-payload.interface';
+import { LoginResponse } from './interfaces/auth-response.interface';
 
 @Injectable()
 export class AuthService {
@@ -30,15 +23,9 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
-  async validateUser(
-    email: string,
-    password: string,
-  ): Promise<UserPayload | null> {
+  async validateUser(email: string, password: string): Promise<UserPayload | null> {
     const user = await lastValueFrom(
-      this.userClient.send<UserPayload>(
-        MessagePatterns.USER_VALIDATE_CREDENTIALS,
-        email,
-      ),
+      this.userClient.send<UserPayload>(MessagePatterns.USER_VALIDATE_CREDENTIALS, email),
     );
     if (!user) return null;
 
@@ -46,13 +33,10 @@ export class AuthService {
     return passwordMatch ? user : null;
   }
 
-  async register(registerDto: RegisterDto) {
+  async register(registerDto: RegisterDto): Promise<UserPayload | undefined> {
     try {
       const user = await lastValueFrom(
-        this.userClient.send<UserPayload>(
-          MessagePatterns.USER_CREATE,
-          registerDto,
-        ),
+        this.userClient.send<UserPayload>(MessagePatterns.USER_CREATE, registerDto),
       );
 
       return user;
@@ -60,12 +44,7 @@ export class AuthService {
       if (error instanceof RpcException) {
         throw error;
       }
-      if (
-        error &&
-        typeof error === 'object' &&
-        'message' in error &&
-        'statusCode' in error
-      ) {
+      if (error && typeof error === 'object' && 'message' in error && 'statusCode' in error) {
         throw new RpcException({
           statusCode: error.statusCode,
           message: error.message,
@@ -74,7 +53,7 @@ export class AuthService {
     }
   }
 
-  async login(loginDto: LoginDto) {
+  async login(loginDto: LoginDto): Promise<LoginResponse> {
     const user = await this.validateUser(loginDto.email, loginDto.password);
     if (!user) {
       throw new RpcException({

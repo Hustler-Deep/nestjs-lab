@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "start:microservices": "npm run start:all --prefix nestjs-microservice-demo",
-    "start:demo": "npm run start:dev --prefix NestJs-Demo"
+    "start:crud-demo": "npm run start:dev --prefix NestJs-Demo"
   },
   "engines": {
     "node": ">=18.0.0"

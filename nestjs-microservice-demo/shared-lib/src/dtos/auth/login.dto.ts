@@ -4,7 +4,7 @@ import { ValidationMessages } from "../../constants/validation.constants";
 export class LoginDto {
   @IsNotEmpty({ message: ValidationMessages.email.required })
   @IsEmail()
-  email: string;
+  declare email: string;
 
   @IsNotEmpty({ message: ValidationMessages.password.required })
   @IsString()
@@ -14,5 +14,5 @@ export class LoginDto {
       message: ValidationMessages.password.complexity,
     }
   )
-  password: string;
+  declare password: string;
 }

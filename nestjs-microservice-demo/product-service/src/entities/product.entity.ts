@@ -10,26 +10,26 @@ import {
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
-  id: number;
+  declare id: number;
 
   @Column()
-  name: string;
+  declare name: string;
 
   @Column()
-  userId: number;
+  declare userId: number;
 
   @Column('decimal')
-  price: number;
+  declare price: number;
 
   @Column()
-  description: string;
+  declare description: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  declare createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  declare updatedAt: Date;
 
   @DeleteDateColumn({ nullable: true })
-  deletedAt: Date | null;
+  declare deletedAt: Date | null;
 }

@@ -14,11 +14,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { RpcError } from '@nestjs/shared-lib';
 
 function isRpcError(obj: unknown): obj is RpcError {
-  return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    ('message' in obj || 'statusCode' in obj)
-  );
+  return typeof obj === 'object' && obj !== null && ('message' in obj || 'statusCode' in obj);
 }
 
 @Injectable()
@@ -42,15 +38,11 @@ export class RpcExceptionInterceptor implements NestInterceptor {
             case 404:
               return throwError(() => new NotFoundException(message));
             default:
-              return throwError(
-                () => new InternalServerErrorException(message),
-              );
+              return throwError(() => new InternalServerErrorException(message));
           }
         }
 
-        return throwError(
-          () => new InternalServerErrorException('Unexpected error'),
-        );
+        return throwError(() => new InternalServerErrorException('Unexpected error'));
       }),
     );
   }

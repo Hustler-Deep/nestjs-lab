@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { SharedLibModule } from '@nestjs/shared-lib';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { ServiceTokens } from '@nestjs/shared-lib';
+import { ServiceTokens, SharedLibModule } from '@nestjs/shared-lib';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
 
 @Module({
   imports: [

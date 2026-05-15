@@ -9,7 +9,8 @@
     "start:auth": "cd auth-service && npm run start:dev",
     "start:user": "cd user-service && npm run start:dev",
     "start:product": "cd product-service && npm run start:dev",
-    "start:all": "concurrently -n gateway,auth,user,product -c green,blue,yellow,magenta \"npm run start:gateway\" \"npm run start:auth\" \"npm run start:user\" \"npm run start:product\""
+    "start:all": "concurrently -n gateway,auth,user,product -c green,blue,yellow,magenta \"npm run start:gateway\" \"npm run start:auth\" \"npm run start:user\" \"npm run start:product\"",
+    "build:all": "concurrently -n gateway,auth,user,product -c green,blue,yellow,magenta \"npm run pre-commit\" \"npm run pre-commit\" \"npm run pre-commit\" \"npm run pre-commit\""
   },
   "keywords": [
     "nestjs",

@@ -11,7 +11,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { firstValueFrom } from 'rxjs';
 import {
   CreateProductDto,
   CreateUserDto,
@@ -24,6 +23,7 @@ import {
   UpdateProductDto,
   UpdateUserDto,
 } from '@nestjs/shared-lib';
+import { firstValueFrom } from 'rxjs';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { RolesGuard } from './common/guards/roles.guard';
 
@@ -41,16 +41,12 @@ export class AppController {
   // ---------------- AUTH ----------------
   @Post('auth/register')
   register(@Body() body: RegisterDto) {
-    return firstValueFrom(
-      this.authService.send(MessagePatterns.AUTH_REGISTER, body),
-    );
+    return firstValueFrom(this.authService.send(MessagePatterns.AUTH_REGISTER, body));
   }
 
   @Post('auth/login')
   login(@Body() body: LoginDto) {
-    return firstValueFrom(
-      this.authService.send(MessagePatterns.AUTH_LOGIN, body),
-    );
+    return firstValueFrom(this.authService.send(MessagePatterns.AUTH_LOGIN, body));
   }
 
   // ---------------- USER ----------------
@@ -72,18 +68,14 @@ export class AppController {
   @Get('users')
   @UseGuards(JwtAuthGuard, RolesGuard)
   getUsers() {
-    return firstValueFrom(
-      this.userService.send(MessagePatterns.USER_GET_ALL, {}),
-    );
+    return firstValueFrom(this.userService.send(MessagePatterns.USER_GET_ALL, {}));
   }
 
   @Get('users/:id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
   getUser(@Param('id') id: string) {
-    return firstValueFrom(
-      this.userService.send(MessagePatterns.USER_GET_ONE, id),
-    );
+    return firstValueFrom(this.userService.send(MessagePatterns.USER_GET_ONE, id));
   }
 
   @Patch('users/:id')
@@ -106,9 +98,7 @@ export class AppController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
   deleteUser(@Param('id') id: string) {
-    return firstValueFrom(
-      this.userService.send(MessagePatterns.USER_DELETE, id),
-    );
+    return firstValueFrom(this.userService.send(MessagePatterns.USER_DELETE, id));
   }
 
   // ---------------- PRODUCTS ----------------
@@ -139,9 +129,7 @@ export class AppController {
   @Get('products/:id')
   @UseGuards(JwtAuthGuard)
   getProduct(@Param('id') id: string) {
-    return firstValueFrom(
-      this.productService.send(MessagePatterns.PRODUCT_GET_ONE, Number(id)),
-    );
+    return firstValueFrom(this.productService.send(MessagePatterns.PRODUCT_GET_ONE, Number(id)));
   }
 
   @Patch('products/:id')
@@ -159,8 +147,6 @@ export class AppController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
   deleteProduct(@Param('id') id: string) {
-    return firstValueFrom(
-      this.productService.send(MessagePatterns.PRODUCT_DELETE, Number(id)),
-    );
+    return firstValueFrom(this.productService.send(MessagePatterns.PRODUCT_DELETE, Number(id)));
   }
 }

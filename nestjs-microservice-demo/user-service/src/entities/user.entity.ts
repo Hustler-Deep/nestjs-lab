@@ -1,3 +1,6 @@
+import { UserRole } from '@nestjs/shared-lib';
+import * as bcrypt from 'bcrypt';
+import { Exclude } from 'class-transformer';
 import {
   BeforeInsert,
   Column,
@@ -7,9 +10,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import * as bcrypt from 'bcrypt';
-import { Exclude } from 'class-transformer';
-import { UserRole } from '@nestjs/shared-lib';
 
 @Entity()
 export class User {

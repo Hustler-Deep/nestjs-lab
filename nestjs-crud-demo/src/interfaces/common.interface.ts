@@ -1,6 +1,6 @@
 export interface CustomExceptionResponse {
-  message?: string;
-  errorCode?: string | number;
+  success: boolean;
+  message: string;
   [key: string]: any;
 }
 

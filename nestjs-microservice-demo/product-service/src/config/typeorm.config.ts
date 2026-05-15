@@ -1,5 +1,5 @@
-import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
+import { DataSource } from 'typeorm';
 import { Product } from '../entities/product.entity';
 config();
 

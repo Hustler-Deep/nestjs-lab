@@ -1,7 +1,7 @@
-import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
-import { User } from 'src/modules/users/entities/user.entity';
 import { Product } from 'src/modules/products/entities/product.entity';
+import { User } from 'src/modules/users/entities/user.entity';
+import { DataSource } from 'typeorm';
 config();
 
 const AppDataSource = new DataSource({

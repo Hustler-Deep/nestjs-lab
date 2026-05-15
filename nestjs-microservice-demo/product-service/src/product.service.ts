@@ -1,9 +1,9 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from './entities/product.entity';
-import { Repository } from 'typeorm';
-import { CreateProductDto, messages, UpdateProductDto, UserRole } from '@nestjs/shared-lib';
 import { RpcException } from '@nestjs/microservices';
+import { CreateProductDto, messages, UpdateProductDto, UserRole } from '@nestjs/shared-lib';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Product } from './entities/product.entity';
 
 @Injectable()
 export class ProductService {

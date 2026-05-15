@@ -1,7 +1,7 @@
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { ConfigService } from '@nestjs/config';
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { messages } from 'src/constants/messages.constants';
 import { JwtPayload } from '../../interfaces/auth.interface';
 

@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { RolesGuard } from './common/guards/roles.guard';
-import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ServiceTokens } from '@nestjs/shared-lib';
+import { AppController } from './app.controller';
+import { AuthModule } from './auth/auth.module';
+import { RolesGuard } from './common/guards/roles.guard';
 
 @Module({
   imports: [

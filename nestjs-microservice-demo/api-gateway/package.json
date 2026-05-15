@@ -1,18 +1,20 @@
 {
   "name": "api-gateway",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "API Gateway service for NestJS microservice architecture with centralized authentication, routing, and shared integrations.",
+  "author": "Deep Akabari",
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "nest build",
+    "clean": "rimraf dist",
+    "build": "npm run clean && nest build",
     "format": "prettier --write .",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "lint": "eslint --fix ."
+    "lint": "eslint --fix .",
+    "pre-commit": "npm run format && npm run lint && npm run build"
   },
   "engines": {
     "node": ">=24.15.0"
@@ -44,9 +46,35 @@
     "@types/node": "^25.6.0",
     "@types/passport-jwt": "^4.0.1",
     "eslint": "^10.3.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
     "globals": "^17.6.0",
     "prettier": "^3.8.3",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "rimraf": "^6.1.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.2"
-  }
+  },
+  "keywords": [
+    "nestjs",
+    "api-gateway",
+    "microservices",
+    "authentication",
+    "jwt",
+    "typescript",
+    "swagger",
+    "gateway-service",
+    "nestjs-microservices",
+    "express",
+    "rxjs",
+    "class-validator",
+    "class-transformer",
+    "passport-jwt",
+    "shared-library",
+    "backend",
+    "rest-api",
+    "nodejs",
+    "distributed-system",
+    "service-routing"
+  ]
 }

@@ -1,10 +1,10 @@
+import { ClassSerializerInterceptor } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ClassSerializerInterceptor } from '@nestjs/common';
-import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { AllExceptionsFilter } from './common/filters/http-exception.filter';
-import { ValidationPipe } from './common/pipes/validation.pipe';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { RpcExceptionInterceptor } from './common/interceptors/rpc-exception.interceptor';
+import { ValidationPipe } from './common/pipes/validation.pipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

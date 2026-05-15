@@ -1,9 +1,9 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
-import { CreateUserDto, isDatabaseError, messages, UpdateUserDto } from '@nestjs/shared-lib';
 import { RpcException } from '@nestjs/microservices';
+import { CreateUserDto, isDatabaseError, messages, UpdateUserDto } from '@nestjs/shared-lib';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {

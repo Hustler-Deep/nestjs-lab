@@ -10,8 +10,8 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Observable, catchError, throwError } from 'rxjs';
 import { RpcError } from '@nestjs/shared-lib';
+import { Observable, catchError, throwError } from 'rxjs';
 
 function isRpcError(obj: unknown): obj is RpcError {
   return typeof obj === 'object' && obj !== null && ('message' in obj || 'statusCode' in obj);

@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
-import { UserService } from './user.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateUserDto, MessagePatterns, UpdateUserDto } from '@nestjs/shared-lib';
+import { UserService } from './user.service';
 
 @Controller()
 export class UserController {

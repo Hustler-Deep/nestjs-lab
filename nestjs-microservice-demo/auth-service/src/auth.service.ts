@@ -1,18 +1,18 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 import {
   LoginDto,
-  messages,
   MessagePatterns,
+  messages,
   RegisterDto,
   ServiceTokens,
 } from '@nestjs/shared-lib';
-import { ClientProxy, RpcException } from '@nestjs/microservices';
+import * as bcrypt from 'bcrypt';
 import { lastValueFrom } from 'rxjs';
-import { UserPayload } from './interfaces/user-payload.interface';
 import { LoginResponse } from './interfaces/auth-response.interface';
+import { UserPayload } from './interfaces/user-payload.interface';
 
 @Injectable()
 export class AuthService {

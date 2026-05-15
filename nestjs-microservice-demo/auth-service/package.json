@@ -1,18 +1,20 @@
 {
   "name": "auth-service",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Authentication service for NestJS microservice architecture with JWT-based authentication, user validation, and secure credential management.",
+  "author": "Deep Akabari",
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "nest build",
+    "clean": "rimraf dist",
+    "build": "npm run clean && nest build",
     "format": "prettier --write .",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "lint": "eslint --fix ."
+    "lint": "eslint --fix .",
+    "pre-commit": "npm run lint && npm run format && npm run build"
   },
   "engines": {
     "node": ">=24.15.0"
@@ -42,9 +44,34 @@
     "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",
     "eslint": "^10.3.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
     "globals": "^17.6.0",
     "prettier": "^3.8.3",
+    "prettier-plugin-organize-imports": "^4.3.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.2"
-  }
+  },
+   "keywords": [
+    "nestjs",
+    "auth-service",
+    "authentication",
+    "authorization",
+    "jwt",
+    "bcrypt",
+    "microservices",
+    "typescript",
+    "nodejs",
+    "nestjs-microservices",
+    "backend",
+    "user-authentication",
+    "security",
+    "token-based-authentication",
+    "class-validator",
+    "class-transformer",
+    "shared-library",
+    "rest-api",
+    "distributed-system",
+    "rxjs"
+  ]
 }

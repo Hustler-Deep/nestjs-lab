@@ -1,3 +1,7 @@
+import * as bcrypt from 'bcrypt';
+import { Exclude } from 'class-transformer';
+import { UserRole } from 'src/constants/user-roles.enum';
+import { Product } from 'src/modules/products/entities/product.entity';
 import {
   BeforeInsert,
   Column,
@@ -8,39 +12,35 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import * as bcrypt from 'bcrypt';
-import { Product } from 'src/modules/products/entities/product.entity';
-import { UserRole } from 'src/constants/user-roles.enum';
-import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
+  @Column({ type: 'varchar', unique: true })
   email: string;
 
   @Exclude()
-  @Column()
+  @Column({ type: 'varchar' })
   password: string;
 
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
   role: UserRole;
 
-  @Column()
+  @Column({ type: 'varchar' })
   name: string;
 
   @OneToMany(() => Product, (product) => product.user)
   products: Product[];
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
-  @DeleteDateColumn({ nullable: true })
+  @DeleteDateColumn({ type: 'timestamp', nullable: true })
   deletedAt: Date | null;
 
   @BeforeInsert()

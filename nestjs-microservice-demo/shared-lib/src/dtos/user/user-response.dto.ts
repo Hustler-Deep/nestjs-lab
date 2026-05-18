@@ -1,28 +1,23 @@
-export class ProductDataDto {
+export class UserDataDto {
   /**
    * @example 1
    */
   declare id: number;
 
   /**
-   * @example Wireless Headphones
+   * @example john.doe@example.com
+   */
+  declare email: string;
+
+  /**
+   * @example John Doe
    */
   declare name: string;
 
   /**
-   * @example Premium noise-cancelling wireless headphones
+   * @example user
    */
-  declare description: string;
-
-  /**
-   * @example 49.99
-   */
-  declare price: number;
-
-  /**
-   * @example 1
-   */
-  declare userId: number;
+  declare role: string;
 
   /**
    * @example 2026-05-15T08:00:00.000Z

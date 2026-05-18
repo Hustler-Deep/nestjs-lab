@@ -4,7 +4,7 @@ import { Product } from '../entities/product.entity';
 config();
 
 const AppDataSource = new DataSource({
-  type: 'mysql',
+  type: 'postgres',
   host: process.env.DB_HOST,
   port: Number.parseInt(process.env.DB_PORT as string, 10),
   username: process.env.DB_USERNAME,

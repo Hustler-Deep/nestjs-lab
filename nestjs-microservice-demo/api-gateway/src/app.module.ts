@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ServiceTokens } from '@nestjs/shared-lib';
-import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { RolesGuard } from './common/guards/roles.guard';
+import { AuthController } from './controllers/auth.controller';
+import { ProductsController } from './controllers/products.controller';
+import { UsersController } from './controllers/users.controller';
 
 @Module({
   imports: [
@@ -51,7 +53,7 @@ import { RolesGuard } from './common/guards/roles.guard';
       },
     ]),
   ],
-  controllers: [AppController],
+  controllers: [AuthController, UsersController, ProductsController],
   providers: [RolesGuard],
 })
 export class AppModule {}

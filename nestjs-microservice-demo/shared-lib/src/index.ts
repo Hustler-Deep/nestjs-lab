@@ -1,8 +1,10 @@
 // DTOs
 export * from "./dtos/auth/login.dto";
 export * from "./dtos/auth/register.dto";
+export * from "./dtos/auth/auth-response.dto";
 export * from "./dtos/user/create-user.dto";
 export * from "./dtos/user/update-user.dto";
+export * from "./dtos/user/user-response.dto";
 export * from "./dtos/product/create-product.dto";
 export * from "./dtos/product/update-product.dto";
 export * from "./dtos/product/product-response.dto";
@@ -24,6 +26,9 @@ export * from "./utils/database.util";
 // Decorators
 export * from "./common/decorators/match.decorator";
 export * from "./common/decorators/roles.decorator";
+
+// Swagger
+export * from "./common/swagger/api-response.dto";
 
 // Module
 export * from "./shared-lib.module";

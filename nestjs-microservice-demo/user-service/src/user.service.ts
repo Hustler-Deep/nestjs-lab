@@ -20,7 +20,7 @@ export class UserService {
       };
     } catch (error: unknown) {
       if (isDatabaseError(error) && error.code === 'ER_DUP_ENTRY') {
-        // Duplicate email error from MySQL
+        // Duplicate email error from database
         throw new RpcException({
           statusCode: HttpStatus.BAD_REQUEST,
           message: messages.EMAIL_ALREADY_EXISTS,
@@ -95,7 +95,7 @@ export class UserService {
     } catch (error: unknown) {
       if (error instanceof RpcException) throw error;
       if (isDatabaseError(error) && error.code === 'ER_DUP_ENTRY') {
-        // Duplicate email error from MySQL
+        // Duplicate email error from database
         throw new RpcException({
           statusCode: HttpStatus.BAD_REQUEST,
           message: messages.EMAIL_ALREADY_EXISTS,

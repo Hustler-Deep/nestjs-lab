@@ -16,9 +16,9 @@
     "lint": "eslint --fix .",
     "pre-commit": "npm run lint && npm run format && npm run build",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "migration:generate": "npm run typeorm migration:generate -- -d src/config/typeorm.config.ts src/database/migrations/$npm_config_name",
-    "migration:run": "npm run typeorm migration:run -- -d src/config/typeorm.config.ts",
-    "migration:revert": "npm run typeorm migration:revert -- -d src/config/typeorm.config.ts"
+    "migration:generate": "cross-env-shell \"npm run typeorm migration:generate -- -d src/config/typeorm.config.ts src/database/migrations/$npm_config_name\"",
+    "migration:run": "cross-env-shell \"npm run typeorm migration:run -- -d src/config/typeorm.config.ts\"",
+    "migration:revert": "cross-env-shell \"npm run typeorm migration:revert -- -d src/config/typeorm.config.ts\""
   },
   "engines": {
     "node": ">=24.15.0"
@@ -34,7 +34,7 @@
     "@nestjs/typeorm": "^11.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
-    "mysql2": "^3.22.3",
+    "pg": "^8.20.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "typeorm": "^0.3.28"
@@ -47,6 +47,7 @@
     "@swc/core": "^1.15.33",
     "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",
+    "cross-env": "^10.1.0",
     "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
@@ -63,8 +64,7 @@
     "product-service",
     "microservices",
     "typeorm",
-    "mysql",
-    "mysql2",
+    "postgresql",
     "database",
     "product-management",
     "typescript",

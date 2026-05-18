@@ -11,10 +11,18 @@ import { UserRole } from '../../constants/user-roles.enum';
 import { Match } from '../../common/decorators/match.decorator';
 
 export class RegisterDto {
+  /**
+   * User email address
+   * @example john.doe@example.com
+   */
   @IsNotEmpty({ message: ValidationMessages.email.required })
   @IsEmail()
   declare email: string;
 
+  /**
+   * User password (min 8 chars, uppercase, lowercase, number, special char)
+   * @example P@ssw0rd!
+   */
   @IsNotEmpty({ message: ValidationMessages.password.required })
   @IsString()
   @Matches(
@@ -25,16 +33,28 @@ export class RegisterDto {
   )
   declare password: string;
 
+  /**
+   * Must match the password field
+   * @example P@ssw0rd!
+   */
   @IsNotEmpty()
   @IsString()
   @Match('password', { message: messages.PASSWORD_DOES_NOT_MATCH })
   declare confirmPassword: string;
 
+  /**
+   * User role
+   * @example user
+   */
   @IsNotEmpty({ message: ValidationMessages.role.required })
   @IsString()
   @IsIn([UserRole.USER, UserRole.ADMIN])
   declare role: UserRole;
 
+  /**
+   * Full name of the user
+   * @example John Doe
+   */
   @IsNotEmpty({ message: ValidationMessages.name.required })
   @IsString()
   declare name: string;
